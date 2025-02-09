@@ -1,8 +1,1 @@
-menu "Custom Packages"
-
-config BR2_PACKAGE_AESD_ASSIGNMENTS
-    bool "aesd-assignments"
-    help
-      Custom package to include assignment applications in Buildroot.
-
-endmenu
+source "$BR2_EXTERNAL_project_base_PATH/package/aesd-assignments/Config.in"
