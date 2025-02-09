@@ -24,9 +24,9 @@ define AESD_ASSIGNMENTS_INSTALL_TARGET_CMDS
 	# Create necessary directories
 
 	# Install finder.sh, finder-test.sh, and writer application
-	$(INSTALL) -m 0755 $(@D)/finder-app/finder.sh $(TARGET_DIR)/usr/bin
-	$(INSTALL) -m 0755 $(@D)/finder-app/finder-test.sh $(TARGET_DIR)/usr/bin
-	$(INSTALL) -m 0755 $(@D)/finder-app/writer $(TARGET_DIR)/usr/bin
+	$(INSTALL) -m 0755 $(@D)/finder-app/finder.sh 		$(TARGET_DIR)/usr/bin
+	$(INSTALL) -m 0755 $(@D)/finder-app/finder-test.sh 	$(TARGET_DIR)/usr/bin
+	$(INSTALL) -m 0755 $(@D)/finder-app/writer 			$(TARGET_DIR)/usr/bin
 
 	# Install configuration files
 	$(INSTALL) -m 0755 $(@D)/conf/* $(TARGET_DIR)/etc/finder-app/conf/

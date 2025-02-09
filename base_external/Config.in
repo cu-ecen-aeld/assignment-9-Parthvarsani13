@@ -1,7 +1,7 @@
 menu "Custom Packages"
 
 config BR2_PACKAGE_AESD_ASSIGNMENTS
-    bool "aesd-assignments package"
+    bool "aesd-assignments"
     help
       Custom package to include assignment applications in Buildroot.
 
