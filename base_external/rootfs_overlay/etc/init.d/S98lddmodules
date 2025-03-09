@@ -1,0 +1,66 @@
+#!/bin/sh
+#
+# Init script for loading/unloading LDD kernel modules
+
+case "$1" in
+    start)
+        echo "Loading LDD kernel modules..."
+        
+        # Ensure module dependencies are up to date
+        depmod -a
+
+        # Load scull module and create devices
+        insmod /lib/modules/$(uname -r)/extra/scull.ko
+        major_scull=$(awk '$2=="scull" {print $1}' /proc/devices)
+        if [ ! -z "$major_scull" ]; then
+            rm -f /dev/scull[0-3]
+            mknod /dev/scull0 c $major_scull 0
+            mknod /dev/scull1 c $major_scull 1
+            mknod /dev/scull2 c $major_scull 2
+            mknod /dev/scull3 c $major_scull 3
+            chmod 666 /dev/scull*
+        fi
+        echo "Scull module loaded successfully."
+
+        # Load faulty module and create device
+        insmod /lib/modules/$(uname -r)/extra/faulty.ko
+        major_faulty=$(awk '$2=="faulty" {print $1}' /proc/devices)
+        if [ ! -z "$major_faulty" ]; then
+            rm -f /dev/faulty
+            mknod /dev/faulty c $major_faulty 0
+            chmod 666 /dev/faulty
+        fi
+        echo "Faulty module loaded successfully."
+
+        # Load hello module using modprobe
+        modprobe hello
+        echo "Hello module loaded successfully."
+
+        ;;
+
+    stop)
+        echo "Unloading LDD kernel modules..."
+
+        # Remove hello module
+        rmmod hello
+        echo "Hello module removed."
+
+        # Remove faulty module and its device
+        rmmod faulty
+        rm -f /dev/faulty
+        echo "Faulty module removed."
+
+        # Remove scull module and its devices
+        rmmod scull
+        rm -f /dev/scull[0-3]
+        echo "Scull module removed."
+
+        ;;
+
+    *)
+        echo "Usage: $0 {start|stop}"
+        exit 1
+        ;;
+esac
+exit 0
+
