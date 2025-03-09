@@ -4,7 +4,7 @@ LDD_SITE_METHOD = git
 LDD_GIT_SUBMODULES = YES
 
 LDD_MODULE_SUBDIRS = misc-modules
-LDD_MODUEL_SUBDIRS += scull
+LDD_MODULE_SUBDIRS += scull
 
 $(eval $(kernel-module))
 $(eval $(generic-package))
